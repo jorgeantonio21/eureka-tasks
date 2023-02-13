@@ -1,2 +1,5 @@
 # development environment variables
 .env
+
+# rust build artefacts
+target
