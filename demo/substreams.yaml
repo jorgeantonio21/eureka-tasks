@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
-  name: 'substreams_ethereum_quickstart'
-  version: v1.0.0
+  name: 'substreams_postgresql_sink_tutorial'
+  version: v0.1.0
 
 protobuf:
   files:
@@ -9,15 +9,33 @@ protobuf:
   importPaths:
     - ./proto
 
+# imports:
+#   database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v0.1.0/substreams-database-change-v0.1.0.spkg
+
 binaries:
   default:
     type: wasm/rust-v1
-    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+    file: target/wasm32-unknown-unknown/release/substreams_postgresql_sink_tutorial.wasm
 
 modules:
+  - name: store_block_meta_start
+    kind: store
+    updatePolicy: set_if_not_exists
+    valueType: proto:eth.block_meta.v1.BlockMeta
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+
+  - name: db_out
+    kind: map
+    inputs:
+      - store: store_block_meta_start
+        mode: deltas
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
+
   - name: map_block
     kind: map
     inputs:
       - source: sf.ethereum.type.v2.Block
     output:
-      type: proto:sf.ethereum.block_meta.v1.BlockMeta
+      type: proto:eth.block_meta.v1.BlockMeta

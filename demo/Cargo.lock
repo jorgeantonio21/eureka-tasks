@@ -30,6 +30,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 
 [[package]]
+name = "base64"
+version = "0.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
+
+[[package]]
 name = "bigdecimal"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -96,6 +102,16 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
+name = "chrono"
+version = "0.4.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "16b0a3d9ed01224b22057780a37bb8c5dbfe1be8ba48678e7bf57ec4b385411f"
+dependencies = [
+ "num-integer",
+ "num-traits",
+]
 
 [[package]]
 name = "cpufeatures"
@@ -180,15 +196,6 @@ dependencies = [
  "impl-serde",
  "primitive-types",
  "uint",
-]
-
-[[package]]
-name = "eureka-ethereum-demo"
-version = "0.1.0"
-dependencies = [
- "prost",
- "substreams",
- "substreams-ethereum",
 ]
 
 [[package]]
@@ -753,13 +760,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "substreams-ethereum"
-version = "0.9.0"
+name = "substreams-database-change"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4862e038da50f36912a34af4c9e89a689f8837967d088e8ce8f0b097661a01a"
+checksum = "bcade6ad8e99eaee1c73ddf2a85c278a931333d33d71d52504e5ab45cc242f4c"
+dependencies = [
+ "base64",
+ "prost",
+ "prost-types",
+ "substreams",
+]
+
+[[package]]
+name = "substreams-ethereum"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "03a426822f6032fa28145cb2cb7661e70554da839a40ee08b6348f1479a44e1b"
 dependencies = [
  "getrandom",
- "num-bigint",
  "substreams",
  "substreams-ethereum-abigen",
  "substreams-ethereum-core",
@@ -768,9 +786,9 @@ dependencies = [
 
 [[package]]
 name = "substreams-ethereum-abigen"
-version = "0.9.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "42913439f396916f3234e18f0182d4b26a3e74ee74d3d3ee37e21fccea6140fd"
+checksum = "dd2ba34bc4d19288e7487aa2b13ee75955222809d2dab48c9dad33230a6f4732"
 dependencies = [
  "anyhow",
  "ethabi",
@@ -785,9 +803,9 @@ dependencies = [
 
 [[package]]
 name = "substreams-ethereum-core"
-version = "0.9.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "851b9196c2bea38c8e6f60d405214564d0d0afb03b19016783f5a1f4aea1ebe7"
+checksum = "f680a56fc8df55dfd0b3465af2ed6f0eb471b4a0b5a9e0e56c13377911104b01"
 dependencies = [
  "bigdecimal",
  "ethabi",
@@ -801,9 +819,9 @@ dependencies = [
 
 [[package]]
 name = "substreams-ethereum-derive"
-version = "0.9.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a75b6f046753349b3c7fc6081efc9e9a1638338c0f0cf50e51ded4d809713061"
+checksum = "b40d3bcb83759b62c2ed372b582be8ba46fc844362a7f7a35fa0269590066118"
 dependencies = [
  "ethabi",
  "heck",
@@ -824,6 +842,19 @@ dependencies = [
  "quote",
  "syn",
  "thiserror",
+]
+
+[[package]]
+name = "substreams-postgresql-sink-tutorial"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "prost",
+ "prost-types",
+ "substreams",
+ "substreams-database-change",
+ "substreams-ethereum",
 ]
 
 [[package]]
