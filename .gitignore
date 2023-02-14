@@ -1,5 +1,6 @@
 # development environment variables
 .env
 
-# rust build artefacts
+# rustlang artefacts
 target
+Cargo.lock
